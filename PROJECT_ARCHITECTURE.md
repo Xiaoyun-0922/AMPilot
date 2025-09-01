@@ -137,20 +137,42 @@ AMPilot/
 
 ## Setup Requirements
 
-1. Python environment with required dependencies
+1. Python environment with required dependencies (managed with `uv`)
 2. Weaviate instance running locally
 3. API keys for OpenRouter/OpenAI
 4. CUDA-enabled GPU (recommended for embeddings)
 5. AMP data in CSV format
+
+## Environment Setup
+
+```bash
+# Install uv
+pip install uv
+
+# Create virtual environment
+uv venv
+
+# Activate virtual environment
+source .venv/bin/activate  # On macOS/Linux
+# or
+.venv\Scripts\activate  # On Windows
+
+# Install dependencies
+uv pip install -e .
+```
 
 ## Usage
 
 ```bash
 # Start the chat interface
 python backend/agentic_rag/main.py
+# or use the installed script
+ampilot
 
 # Ingest data to Weaviate
 python backend/agentic_rag/ingest.py
+# or use the installed script
+ingest
 ```
 
 This architecture provides a robust foundation for AMP research assistance with room for future enhancements and scaling.

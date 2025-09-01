@@ -1,6 +1,8 @@
 import json
 import uuid
+
 from retrieval_graph.graph import app
+
 
 def run_agent_cli():
     """
@@ -25,13 +27,13 @@ def run_agent_cli():
             if user_input.lower() in ["quit", "exit"]:
                 print("AMPilot: Goodbye!")
                 break
-            
+
             # The input to the graph is now just the single new message.
             # The checkpointer handles loading the past messages.
             inputs = {"messages": [("human", user_input)]}
-            
+
             print("AMPilot: ", end="", flush=True)
-            
+
             final_response_content = ""
             # Use .stream() to get the agent's response
             for chunk in app.stream(inputs, config=config, stream_mode="values"):
@@ -44,12 +46,12 @@ def run_agent_cli():
 
             # Attempt to parse and pretty-print the final JSON response
             try:
-                json_start = final_response_content.find('{')
-                json_end = final_response_content.rfind('}') + 1
+                json_start = final_response_content.find("{")
+                json_end = final_response_content.rfind("}") + 1
                 if json_start != -1 and json_end != -1:
                     json_str = final_response_content[json_start:json_end]
                     parsed_json = json.loads(json_str)
-                    print("\r" + " " * len(final_response_content), end="\r") 
+                    print("\r" + " " * len(final_response_content), end="\r")
                     print("AMPilot (Formatted JSON):")
                     print(json.dumps(parsed_json, indent=2))
                 else:
@@ -63,6 +65,7 @@ def run_agent_cli():
         except Exception as e:
             print(f"\nAn unexpected error occurred: {e}")
             break
+
 
 if __name__ == "__main__":
     run_agent_cli()

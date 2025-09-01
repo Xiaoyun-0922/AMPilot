@@ -1,0 +1,71 @@
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment variables and secrets
+.env
+*.env
+
+# UV specific
+.uv/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Project specific
+/data/raw/
+/data/processed/
+
+# Large model files
+*.bin
+*.pt
+*.pth
+*.onnx
+*.h5
+*.hdf5
+*.pkl
+
+# Database
+weaviate/
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Profiling
+.prof
+# UV lock file
+uv.lock
+
+# mypy
+.mypy_cache/

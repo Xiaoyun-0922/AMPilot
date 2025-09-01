@@ -1,5 +1,7 @@
 from typing import List, TypedDict
+
 from langchain_core.messages import BaseMessage
+
 
 class AgentState(TypedDict):
     """
@@ -9,4 +11,5 @@ class AgentState(TypedDict):
         messages: A list of messages that make up the conversation history.
                   The last message in the list is the most recent one.
     """
+
     messages: List[BaseMessage]
