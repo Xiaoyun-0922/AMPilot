@@ -14,13 +14,12 @@ def main():
     """
     Main execution function.
     """
-    # --- 1. Environment Setup ---
     load_dotenv()
     OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
     if not OPENROUTER_API_KEY:
         raise ValueError("OPENROUTER_API_KEY not found in .env file.")
 
-    # --- 2. Model and Tools Initialization ---
+    # Model and Tools Initialization ---
     llm = ChatOpenAI(
         model="openai/gpt-4o-mini",
         temperature=0,
@@ -35,10 +34,10 @@ def main():
     tools = [hypothesis_test_z_test, regression_analysis, visualize_data_curve]
     llm_with_tools = llm.bind_tools(tools)
 
-    # --- 3. Create the Agent Workflow ---
+    # Create the Agent Workflow ---
     app = create_workflow(llm_with_tools, tools)
 
-    # --- 4. Prepare Sample Data ---
+    # Prepare Sample Data ---
     data = {
         'Time': range(1, 101),
         'GroupA_Score': [x + 5 + (i % 5) for i, x in enumerate(np.random.randn(100) * 10)],
@@ -50,7 +49,7 @@ def main():
     df.to_csv(csv_file_path, index=False)
     print(f"Sample data file created at: '{csv_file_path}'")
     
-    # --- 5. Run Agent with User Questions ---
+    # Run Agent with User Questions ---
     questions = [
         f"Hello, my data file is at '{csv_file_path}'. Please compare 'GroupA_Score' and 'GroupB_Score' using a Z-test to see if they come from the same distribution. Summarize the findings.",
         f"I want to analyze the impact of the 'Time' variable on the 'Performance_Metric' variable. Please run a regression analysis using the file '{csv_file_path}' and explain the R-squared and coefficients in simple terms.",
@@ -83,3 +82,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
