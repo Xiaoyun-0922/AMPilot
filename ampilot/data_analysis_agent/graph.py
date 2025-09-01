@@ -9,7 +9,6 @@ class AgentState(TypedDict):
     """
     messages: Annotated[list, lambda x, y: x + y]
 
-# 注意函数签名，它现在接收一个 'tools' 列表
 def create_workflow(llm_with_tools, tools):
     """
     Builds and compiles the LangGraph agent workflow using the builder pattern and ToolNode.
@@ -19,8 +18,6 @@ def create_workflow(llm_with_tools, tools):
         messages = state["messages"]
         response = llm_with_tools.invoke(messages)
         return {"messages": [response]}
-
-    # 我们不再需要手写的 call_tool 函数了！
 
     def should_continue(state):
         """
@@ -38,7 +35,6 @@ def create_workflow(llm_with_tools, tools):
 
     builder.add_node("agent", call_model)
     
-    # 直接使用 ToolNode 创建 action 节点
     tool_node = ToolNode(tools)
     builder.add_node("action", tool_node)
 
@@ -56,4 +52,5 @@ def create_workflow(llm_with_tools, tools):
 
     app = builder.compile()
     
+
     return app
