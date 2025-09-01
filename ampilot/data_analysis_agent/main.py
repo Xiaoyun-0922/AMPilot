@@ -36,7 +36,6 @@ def main():
     llm_with_tools = llm.bind_tools(tools)
 
     # --- 3. Create the Agent Workflow ---
-    # 正确地将 'tools' 列表传递给 create_workflow
     app = create_workflow(llm_with_tools, tools)
 
     # --- 4. Prepare Sample Data ---
@@ -82,4 +81,5 @@ def main():
                  print(last_message.content)
 
 if __name__ == "__main__":
+
     main()
