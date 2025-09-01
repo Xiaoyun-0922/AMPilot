@@ -1,0 +1,46 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "ampilot"
+version = "0.1.0"
+description = "An agentic RAG system for Antimicrobial Peptides (AMPs) using LangGraph."
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+# Core LangChain and LangGraph
+langchain = "^0.2.1"
+langgraph = "^0.0.60"
+langserve = "^0.2.1"
+langchain-openai = "^0.1.8" # For the ChatOpenAI model
+langchain-core = "^0.2.5"
+
+# Vector Store and Embeddings
+weaviate-client = "^4.6.3"
+langchain-huggingface = "^0.0.3"
+sentence-transformers = "^3.0.1" # BGE model dependency
+
+# Data Handling
+pandas = "^2.2.2"
+tqdm = "^4.66.4"
+
+# Configuration
+python-dotenv = "^1.0.1"
+
+# Server for LangServe
+uvicorn = "^0.30.1"
+
+# Required for HuggingFace embeddings on GPU
+torch = "^2.3.1"
+transformers = "^4.41.2"
+
+
+[tool.langserve]
+# This section tells `langchain serve` how to find your LangGraph application
+[tool.langserve.server]
+# The path to your compiled graph object `app`
+# Format: `path.to.your.module:graph_object_name`
+app = "backend.agentic_rag.retrieval_graph.graph:app"
