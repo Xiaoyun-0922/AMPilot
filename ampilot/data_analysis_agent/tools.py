@@ -1,15 +1,10 @@
 import pandas as pd
-# ---vvv--- START OF FIX ---vvv---
 import matplotlib
-# We must set the backend before importing pyplot
-matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
-# ---^^^--- END OF FIX ---^^^---
 from langchain_core.tools import tool
 from statsmodels.stats.weightstats import ztest
 import statsmodels.api as sm
 
-# ... a többi tool (hypothesis_test_z_test, regression_analysis) változatlan marad ...
 @tool
 def hypothesis_test_z_test(csv_path: str, column1_name: str, column2_name: str) -> str:
     """
@@ -91,4 +86,5 @@ def visualize_data_curve(csv_path: str, columns_to_plot: list[str], x_axis_colum
         
         return f"Chart successfully generated and saved to: '{output_image_path}'"
     except Exception as e:
+
         return f"An error occurred during data visualization: {e}"
