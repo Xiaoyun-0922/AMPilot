@@ -233,10 +233,10 @@ Return ONLY JSON, no other content."""
                 "reasoning": reasoning
             })
             
-            logger.info(f"✅ Routed to {selected_agent} (confidence: {confidence:.2f})")
+            logger.info(f" Routed to {selected_agent} (confidence: {confidence:.2f})")
             
         except Exception as e:
-            logger.error(f"❌ Routing failed: {e}")
+            logger.error(f" Routing failed: {e}")
             # Use fallback routing
             state["selected_agent"] = "general"
             state["routing_confidence"] = 0.1
@@ -330,14 +330,14 @@ Return ONLY JSON, no other content."""
                     "tool": tool_name
                 })
 
-                logger.info(f"✅ Research Agent executed successfully using {tool_name}")
+                logger.info(f" Research Agent executed successfully using {tool_name}")
 
             else:
                 state["agent_response"] = "Research Agent tools not available. Please ensure Weaviate is running and tools are properly configured."
                 state["error"] = "Research Agent tools not available"
 
         except Exception as e:
-            logger.error(f"❌ Research Agent failed: {e}")
+            logger.error(f" Research Agent failed: {e}")
             state["agent_response"] = f"Research Agent encountered an error: {str(e)}"
             state["error"] = str(e)
 
@@ -426,14 +426,14 @@ Provide detailed, scientifically accurate information based on current research.
                     "sequences_found": len(potential_sequences)
                 })
 
-                logger.info("✅ AMP Designer Agent (LLM-based) executed successfully")
+                logger.info(" AMP Designer Agent (LLM-based) executed successfully")
 
             else:
                 state["agent_response"] = "AMP Designer Agent not available. Please check system configuration."
                 state["error"] = "AMP Designer Agent not available"
 
         except Exception as e:
-            logger.error(f"❌ AMP Designer Agent failed: {e}")
+            logger.error(f" AMP Designer Agent failed: {e}")
             state["agent_response"] = f"AMP Designer Agent encountered an error: {str(e)}"
             state["error"] = str(e)
 
@@ -510,14 +510,14 @@ Provide detailed, scientifically rigorous recommendations with practical impleme
                     "analysis_approach": "llm_based_guidance"
                 })
 
-                logger.info("✅ Data Analysis Agent (LLM-based) executed successfully")
+                logger.info(" Data Analysis Agent (LLM-based) executed successfully")
 
             else:
                 state["agent_response"] = "Data Analysis Agent not available. Please check system configuration."
                 state["error"] = "Data Analysis Agent not available"
 
         except Exception as e:
-            logger.error(f"❌ Data Analysis Agent failed: {e}")
+            logger.error(f" Data Analysis Agent failed: {e}")
             state["agent_response"] = f"Data Analysis Agent encountered an error: {str(e)}"
             state["error"] = str(e)
 
@@ -548,10 +548,10 @@ Respond in a friendly and informative manner."""
                 "status": "success"
             })
 
-            logger.info("✅ General Agent executed successfully")
+            logger.info(" General Agent executed successfully")
 
         except Exception as e:
-            logger.error(f"❌ General Agent failed: {e}")
+            logger.error(f" General Agent failed: {e}")
             state["agent_response"] = "I'm AMPilot, specialized in antimicrobial peptide research. How can I help you?"
             state["error"] = str(e)
 
@@ -566,7 +566,7 @@ Respond in a friendly and informative manner."""
             "status": "completed"
         })
 
-        logger.info("✅ Response finalized")
+        logger.info("Response finalized")
         return state
 
     async def process_query(self, user_query: str, session_id: str = "default", user_context: Dict[str, Any] = None) -> Dict[str, Any]:
@@ -605,7 +605,7 @@ Respond in a friendly and informative manner."""
             }
 
         except Exception as e:
-            logger.error(f"❌ Graph execution failed: {e}")
+            logger.error(f" Graph execution failed: {e}")
             return {
                 "success": False,
                 "error": str(e),
@@ -618,7 +618,7 @@ Respond in a friendly and informative manner."""
             user_context = {}
 
         # Yield initial status
-        yield {"type": "stream_chunk", "content": "🔍 Analyzing your query...\n\n"}
+        yield {"type": "stream_chunk", "content": "Analyzing your query...\n\n"}
 
         initial_state = {
             "messages": [],
@@ -644,7 +644,7 @@ Respond in a friendly and informative manner."""
             selected_agent = result.get("selected_agent", "general")
             confidence = result.get("routing_confidence", 0.0)
 
-            yield {"type": "stream_chunk", "content": f"✅ Routing to {selected_agent.replace('_', ' ').title()} Agent (confidence: {confidence:.2f})\n\n"}
+            yield {"type": "stream_chunk", "content": f" Routing to {selected_agent.replace('_', ' ').title()} Agent (confidence: {confidence:.2f})\n\n"}
 
             # Yield processing status
             if selected_agent == "research":
