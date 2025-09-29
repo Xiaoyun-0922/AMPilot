@@ -186,27 +186,7 @@ def find_peptides_by_properties(query: str = "", bacterium: str = "", mic_range:
 
         for item in response.objects:
             result = item.properties.copy()
-
-            # Apply additional filtering based on criteria
-                # Robust bacterium matching: allow abbreviations and full names both ways
-            if bacterium:
-                cand = (result.get('bacterium', '') or '').lower()
-                query_b = bacterium.lower()
-                # Expand common abbreviations: "s. aureus" -> "staphylococcus aureus", etc.
-                def expand_abbrev(name: str) -> str:
-                    mapping = {
-                        "s. aureus": "staphylococcus aureus",
-                        "e. coli": "escherichia coli",
-                        "b. subtilis": "bacillus subtilis",
-                        "e. faecalis": "enterococcus faecalis",
-                        "e. faecium": "enterococcus faecium",
-                        "p. aeruginosa": "pseudomonas aeruginosa",
-                    }
-                    return mapping.get(name, name)
-                expanded_query = expand_abbrev(query_b)
-                expanded_cand = expand_abbrev(cand)
-                if not (query_b in cand or expanded_query in cand or query_b in expanded_cand or expanded_query in expanded_cand):
-                    continue
+            
             if strain and strain.lower() not in (result.get('strain', '') or '').lower():
                 continue
             if modifications and modifications.lower() not in (result.get('modifications', '') or '').lower():
@@ -455,3 +435,4 @@ def _mic_distance(mic: Optional[float], spec: Optional[Dict[str, Any]]) -> float
 
 # Note: We no longer need to close the client here as it's a long-lived connection.
 # The connection will be closed when the application shuts down.
+
