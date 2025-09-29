@@ -165,71 +165,13 @@ def find_peptides_by_properties(query: str = "", bacterium: str = "", mic_range:
         # Use a higher limit and better search strategy for comprehensive results
         search_limit = 200 if bacterium else 100  # Much higher limit for comprehensive coverage
 
-        # For bacterium searches, use multiple comprehensive strategies
+        # For bacterium searches, use a direct search
         if bacterium and not query:
-            # Strategy 1: Direct bacterium search
-            bacterium_response = amp_collection.query.bm25(
+            response = amp_collection.query.bm25(
                 query=search_query,
                 limit=search_limit,
                 return_properties=None
             )
-
-            # Strategy 2: Search for known important sequences that might be missed
-            # This is a workaround for BM25 relevance scoring issues
-            important_sequences = [
-                "GIGKFLKKAKKFGKAFVKILKK",  # Known to have S. aureus data but often missed
-                "NLCASLRARHTIPQCKKFGRR",
-                "GMKCKFCCNCCNLNGCGVCCRF",
-                "FLPLLAGLAANFLPKIFCKITRK"
-            ]
-
-            sequence_items = []
-            for seq in important_sequences:
-                seq_response = amp_collection.query.bm25(
-                    query=seq,
-                    limit=20,
-                    return_properties=None
-                )
-                sequence_items.extend(seq_response.objects)
-
-            # Combine all results
-            all_items = list(bacterium_response.objects) + sequence_items
-
-            # Filter for the target bacterium and deduplicate
-            bacterium_lower = bacterium.lower()
-            bacterium_variations = [bacterium_lower]
-
-            # Add common variations
-            if "s. aureus" in bacterium_lower or "staphylococcus aureus" in bacterium_lower:
-                bacterium_variations.extend(["s. aureus", "staphylococcus aureus", "aureus", "s.aureus"])
-            elif "e. coli" in bacterium_lower or "escherichia coli" in bacterium_lower:
-                bacterium_variations.extend(["e. coli", "escherichia coli", "coli", "e.coli"])
-
-            # Filter and deduplicate
-            seen_ids = set()
-            matching_items = []
-
-            for item in all_items:
-                item_id = getattr(item, 'uuid', str(item))
-                if item_id in seen_ids:
-                    continue
-
-                result = item.properties
-                result_bacterium = (result.get('bacterium', '') or '').lower()
-
-                # Check if any variation matches
-                for variation in bacterium_variations:
-                    if variation in result_bacterium:
-                        seen_ids.add(item_id)
-                        matching_items.append(item)
-                        break
-
-            # Create response with filtered items
-            class MockResponse:
-                def __init__(self, objects):
-                    self.objects = objects
-
-            response = MockResponse(matching_items)
         else:
             response = amp_collection.query.bm25(
                 query=search_query,
