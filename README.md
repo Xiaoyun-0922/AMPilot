@@ -11,7 +11,7 @@
 - **Property-based Filtering**: Search by MIC values, target organisms, sequence length, and more
 - **Sequence Similarity Search**: Find peptides similar to your query sequence
 
-### 🧬 AMP Designer Agent  
+### 🧬 AMP Rerank (design) Agent  
 - **Sequence Analysis**: Comprehensive analysis of peptide sequences and their properties
 - **Intelligent Ranking**: AI-powered ranking of peptide sequences based on antimicrobial potential
 - **Experience Learning**: Learns from analysis patterns to improve future recommendations
