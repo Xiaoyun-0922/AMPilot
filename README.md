@@ -6,7 +6,7 @@
 ## 🌟 Features
 
 ### 🔬 Research Agent
-- **Intelligent Database Search**: Semantic search through comprehensive AMP databases (GRAMPA, DRAMP, dbAASP)
+- **Intelligent Database Search**: Semantic search through comprehensive AMP databases grampa.csv
 - **Natural Language Queries**: Ask questions in plain English about antimicrobial peptides
 - **Property-based Filtering**: Search by MIC values, target organisms, sequence length, and more
 - **Sequence Similarity Search**: Find peptides similar to your query sequence
@@ -20,7 +20,7 @@
 ### 📊 Data Analysis Agent
 - **Statistical Analysis**: Perform correlation analysis, regression modeling, and hypothesis testing
 - **Natural Language Data Input**: Describe your data in plain English - no file uploads needed
-- **Automated Report Generation**: Generate professional PDF reports with visualizations
+- **Automated Report Generation**: Generate professional PDF(markdown) reports with visualizations
 - **Multi-factor Analysis**: Analyze relationships between peptide properties and biological activity
 
 ## 🏗️ Architecture
@@ -49,14 +49,14 @@ AMPilot uses a sophisticated multi-agent architecture powered by LangGraph:
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.10+
 - Conda (recommended) or pip
 - API Key from LLM provider
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/AMPilot.git
+   git clone https://github.com/Xiaoyun-0922/AMPilot.git
    cd AMPilot
    ```
 
